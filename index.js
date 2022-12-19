@@ -1,7 +1,8 @@
 const express = require('express')
-const morgan = require('morgan')
+const morgan = require('morgan') //Loga requests
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const routes = require('./config/routes')
 
 const app = express()
 
@@ -9,19 +10,8 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors()) // Por então não serão addicionados dominios ao cors
+app.use(routes)
 
-
-let dbsimulation = [
-    {'1': {Nome: "Adriano", Idade: "34"} },
-    {'2': {Nome: "Sara", Idade: "35"} },
-    {'3': {Nome: "Shadow", Idade: "12"} }
-
-]
-
-//get
-app.get('/api/v1/', (req, res) => {
-    return res.json(dbsimulation)
-})
 
 //Start do servidor
 app.listen(21261, () => {
