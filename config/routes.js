@@ -42,15 +42,28 @@ routes.delete('/api/test/:id', (req, res) => {
 
 //Get cep
 routes.get('/api/cep/:cep', (req, res) => {
+    getAddress(req).then(data => {
+        res.json(data)
+    }).catch(error => console.log(error))
     
-    const promise = axios.get("https://viacep.com.br/ws/35162000/json/")
-    
-    const dataPromisse = promise.then(
-        (response) => response.data
-    )
-    console.log(dataPromisse)
-    return res.send(dataPromisse)
 })
+
+function getAddress(req) {
+    
+    const address = getViaCep(req.params.cep) //Cria uma promisso para a request do axios
+    .catch(error => {
+        console.log(error.response)
+    })
+
+    const addressData = address.then((response) => response.data) //Extrai dados da promisse
+        
+    console.log(addressData)
+    return addressData
+}
+
+function getViaCep(cep){ //Retorna uma promisse
+    return axios.get("https://viacep.com.br/ws/" + cep + "/json/")
+}
 
 
 
