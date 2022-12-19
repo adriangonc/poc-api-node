@@ -3,6 +3,7 @@ const morgan = require('morgan') //Loga requests
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const routes = require('./config/routes')
+const axios = require('axios')
 
 const app = express()
 

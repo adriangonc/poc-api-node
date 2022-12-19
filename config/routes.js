@@ -1,5 +1,8 @@
 const express = require('express')
 const routes = express.Router()
+const axios = require('axios')
+
+//import { getCep } from "../shipping/findCEP"
 
 let dbsimulation = [
     {'1': {Nome: "Adriano", Idade: "34"} },
@@ -36,6 +39,19 @@ routes.delete('/api/test/:id', (req, res) => {
 
     return res.send(dbsimulation)
 })
+
+//Get cep
+routes.get('/api/cep/:cep', (req, res) => {
+    
+    const promise = axios.get("https://viacep.com.br/ws/35162000/json/")
+    
+    const dataPromisse = promise.then(
+        (response) => response.data
+    )
+    console.log(dataPromisse)
+    return res.send(dataPromisse)
+})
+
 
 
 module.exports = routes
